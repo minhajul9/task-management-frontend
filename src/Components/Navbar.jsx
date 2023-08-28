@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 
 const Navbar = () => {
 
-    const { user, googleSignIn, logOut, githubSignIn } = useContext(AuthContext)
+    const { user, setUser, googleSignIn, logOut, githubSignIn } = useContext(AuthContext)
 
     const navItem = <>
         <li><NavLink to='/'>Home</NavLink></li>
@@ -18,40 +18,92 @@ const Navbar = () => {
 
     </>;
 
-    const handleGoogle = () =>{
+    const handleGoogle = () => {
         googleSignIn()
-        .then(result => {
-            console.log(result.user);
-        })
-        .catch(error => {
-            console.log(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Login Failed! Try again.',
-              })
-        })
+            .then(result => {
+                const user = result.user;
+                const createUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    photo: user.photoURL,
+                    done: [],
+                    doing: []
+                }
+
+                fetch('http://localhost:5000/users', {
+                    method: "POST",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(createUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            setUser(createUser)
+                        }
+                        else {
+                            setUser(data)
+                        }
+                    })
+                console.log(user);
+            })
+            .catch(error => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Login Failed! Try again.',
+                })
+            })
     }
 
-    const handleGithub = () =>{
+    const handleGithub = () => {
         githubSignIn()
-        .then(result => {
-            console.log(result.user);
-        })
-        .catch(error => {
-            console.log(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Login Failed! Try again.',
-              })
-        })
+            .then(result => {
+                const user = result.user;
+                const createUser = {
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid,
+                    photo: user.photoURL,
+                    done: [],
+                    doing: []
+                }
+
+                fetch('http://localhost:5000/users', {
+                    method: "POST",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(createUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            setUser(createUser)
+                        }
+                        else {
+                            setUser(data)
+                        }
+                    })
+                console.log(user);
+            })
+            .catch(error => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Login Failed! Try again.',
+                })
+            })
     }
 
     const handleLogOut = () => {
         logOut()
-        .then(() => {})
-        .catch(error => console.log(error))
+            .then(() => { })
+            .catch(error => console.log(error))
     }
 
     return (
@@ -75,12 +127,12 @@ const Navbar = () => {
             <div className="navbar-end">
                 {
                     user ? <>
-                        <p className='mr-4'><small>{user.displayName}</small></p>
+                        <img src={user.photo} className='w-10 h-10 rounded-full mx-4' alt="" />
                         <button onClick={handleLogOut} className='btn'>Log Out</button>
                     </> :
                         <div className='space-x-9 flex items-center'>
-                            <FcGoogle onClick={handleGoogle}  className='text-3xl'/>
-                            <FaGithub onClick={handleGithub} className='text-3xl'/>
+                            <FcGoogle onClick={handleGoogle} className='text-3xl' />
+                            <FaGithub onClick={handleGithub} className='text-3xl' />
                         </div>
                 }
             </div>

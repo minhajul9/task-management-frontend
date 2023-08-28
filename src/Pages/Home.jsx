@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Provider/AuthProvider";
 
 
 const Home = () => {
     const [tasks, setTasks] = useState([]);
+    const {user} = useContext(AuthContext);
+    // console.log(user);
 
     useEffect(() => {
         fetch(`https://mohite-task-minhajul9.vercel.app/task`)

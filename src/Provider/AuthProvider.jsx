@@ -12,10 +12,26 @@ const githubProvider = new GithubAuthProvider();
 const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser)
+            if (currentUser) {
+                // console.log(currentUser);
+                fetch(`http://localhost:5000/users/${currentUser.uid}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log('data',data);
+                        setUser(data)
+                        setLoading(false)
+                    })
+                // console.log(user);
+            }
+            else {
+                setUser(null)
+                setLoading(false)
+            }
+            
         })
         return () => {
             return unsubscribe();
@@ -36,6 +52,9 @@ const AuthProvider = ({children}) => {
 
     const authInfo = {
         user, 
+        setUser,
+        loading, 
+        setLoading,
         googleSignIn, 
         githubSignIn,
         logOut
