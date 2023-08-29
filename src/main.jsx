@@ -6,7 +6,6 @@ import Main from './Layout/Main'
 import Home from './Pages/Home'
 import ErrorPage from './Pages/ErrorPage'
 import AddATask from './Pages/AddATask'
-import AllTask from './Pages/AllTask'
 import MyTasks from './Pages/MyTasks'
 import AuthProvider from './Provider/AuthProvider'
 import PrivateRoute from './Routes/PrivateRoute'
@@ -26,10 +25,6 @@ const router = createBrowserRouter([
       {
         path: '/addATask',
         element: <PrivateRoute><AddATask></AddATask></PrivateRoute>
-      },
-      {
-        path: '/allTask',
-        element: <AllTask></AllTask>,
       },
       {
         path: '/myTasks',

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
@@ -14,7 +14,6 @@ const Navbar = () => {
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/myTasks'>My Tasks</NavLink></li>
         <li><NavLink to='/addATask'>Add A Task</NavLink></li>
-        <li><NavLink to='/allTask'>All Task</NavLink></li>
 
     </>;
 
@@ -117,7 +116,7 @@ const Navbar = () => {
                         {navItem}
                     </ul>
                 </div>
-                <a className="btn btn-ghost normal-case text-xl">Task</a>
+                <Link to='/' className="btn btn-ghost normal-case text-xl">Task</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

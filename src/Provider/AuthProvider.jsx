@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
                 fetch(`http://localhost:5000/users/${currentUser.uid}`)
                     .then(res => res.json())
                     .then(data => {
-                        // console.log('data',data);
+                        console.log('data',data);
                         setUser(data)
                         setLoading(false)
                     })
