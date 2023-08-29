@@ -20,7 +20,7 @@ const AddATask = () => {
         const task = {title, description, level, creator: user?.email}
         console.log(task)
 
-        fetch('https://mohite-task-minhajul9.vercel.app/tasks', {
+        fetch('http://localhost:5000/tasks', {
             method: "POST",
             headers: {
                 'content-type' : 'application/json'
@@ -40,10 +40,10 @@ const AddATask = () => {
     }
 
     return (
-        <div className="hero min-h-screen bg-base-200 pt-20">
-            <div className="hero-content flex-col ">
-                <h1 className='text-3xl font-bold'>Add a task</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className="card flex-shrink-0 w-full p-8 shadow-2xl bg-base-100">
+        <div className="w-11/12 md:w-1/2 mx-auto min-h-screen pt-20">
+            <div className="flex-col ">
+                <h1 className='text-3xl font-bold text-center'>Add a task</h1>
+                <form onSubmit={handleSubmit(onSubmit)} className="card flex-shrink-0 w-full md:p-8 shadow-2xl bg-base-100">
                     <div className="card-body">
                         <div className="form-control">
                             <label className="label">

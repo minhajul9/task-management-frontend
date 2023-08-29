@@ -128,7 +128,7 @@ const Navbar = () => {
                 {
                     user ? <>
                         <img src={user.photo} className='w-10 h-10 rounded-full mx-4' alt="" />
-                        <button onClick={handleLogOut} className='btn'>Log Out</button>
+                        <button onClick={handleLogOut} className='btn btn-sm text-sm'>Log Out</button>
                     </> :
                         <div className='space-x-9 flex items-center'>
                             <FcGoogle onClick={handleGoogle} className='text-3xl' />

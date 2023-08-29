@@ -16,6 +16,7 @@ const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            // console.log(currentUser);
             if (currentUser) {
                 // console.log(currentUser);
                 fetch(`http://localhost:5000/users/${currentUser.uid}`)
