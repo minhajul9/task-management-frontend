@@ -41,8 +41,8 @@ const AddATask = () => {
 
     return (
         <div className="w-11/12 md:w-1/2 mx-auto min-h-screen pt-20">
-            <div className="flex-col ">
-                <h1 className='text-3xl font-bold text-center'>Add a task</h1>
+            <div className="flex-col mt-12">
+                <h1 className='text-3xl font-bold text-center my-8'>Add a task</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="card flex-shrink-0 w-full md:p-8 shadow-2xl bg-base-100">
                     <div className="card-body">
                         <div className="form-control">
@@ -71,7 +71,7 @@ const AddATask = () => {
                             <label className="label">
                                 <span className="label-text">Description</span>
                             </label>
-                            <textarea className="input input-bordered h-20 p-2" {...register('description', {required: true})} placeholder='Description'  cols="50" rows="30"></textarea>
+                            <textarea className="input input-bordered h-32 p-2" {...register('description', {required: true})} placeholder='Description'  cols="50" rows="30"></textarea>
                             {errors.description && <span className="text-red-600">Please, Write description.</span>}
 
                         </div>

@@ -9,6 +9,7 @@ import AddATask from './Pages/AddATask'
 import AllTask from './Pages/AllTask'
 import MyTasks from './Pages/MyTasks'
 import AuthProvider from './Provider/AuthProvider'
+import PrivateRoute from './Routes/PrivateRoute'
 
 
 
@@ -24,16 +25,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/addATask',
-        element: <AddATask></AddATask>
+        element: <PrivateRoute><AddATask></AddATask></PrivateRoute>
       },
       {
         path: '/allTask',
         element: <AllTask></AllTask>,
-        loader: () => fetch('https://mohite-task-minhajul9.vercel.app/tasks')
       },
       {
         path: '/myTasks',
-        element: <MyTasks></MyTasks>
+        element: <PrivateRoute><MyTasks></MyTasks></PrivateRoute>
       }
     ],
     errorElement: <ErrorPage></ErrorPage>

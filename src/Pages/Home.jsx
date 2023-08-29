@@ -4,15 +4,15 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 
 const Home = () => {
-    const [tasks, setTasks] = useState([]);
-    const {user} = useContext(AuthContext);
-    console.log(user);
+    // const [tasks, setTasks] = useState([]);
+    const {user, tasks} = useContext(AuthContext);
+    console.log(tasks);
 
-    useEffect(() => {
-        fetch(`https://mohite-task-minhajul9.vercel.app/task`)
-            .then(res => res.json())
-            .then(data => setTasks(data))
-    }, []);
+    // useEffect(() => {
+    //     fetch(`https://mohite-task-minhajul9.vercel.app/task`)
+    //         .then(res => res.json())
+    //         .then(data => setTasks(data))
+    // }, []);
 
     const showDetails = task => {
         Swal.fire({

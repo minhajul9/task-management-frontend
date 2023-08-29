@@ -1,16 +1,11 @@
 import { useLoaderData } from "react-router-dom";
 import { addToDb, getcompletedTask } from "../utilities/fakedb";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const AllTask = () => {
 
-    const [tasks, setTasks] = useState([]);
-
-    useEffect(() => {
-        fetch(`https://mohite-task-minhajul9.vercel.app/task`)
-            .then(res => res.json())
-            .then(data => setTasks(data))
-    }, [])
+    const {tasks} = useContext(AuthContext)
 
     const [completedTask, setCompletedTask] = useState(getcompletedTask());
     // console.log(completedTask);
@@ -32,7 +27,7 @@ const AllTask = () => {
                         {
                             tasks.map(task =>
                                 <tr key={task._id}>
-                                    <td>{task.title}</td>
+                                    <td className="font-bold text-xl">{task.title}</td>
                                     <td>{task.description}</td>
                                     <td>{task.level}</td>
                                     <td>{
