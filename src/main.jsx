@@ -9,6 +9,7 @@ import AddATask from './Pages/AddATask'
 import MyTasks from './Pages/MyTasks'
 import AuthProvider from './Provider/AuthProvider'
 import PrivateRoute from './Routes/PrivateRoute'
+import EditTask from './Pages/EditTask'
 
 
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: '/myTasks',
         element: <PrivateRoute><MyTasks></MyTasks></PrivateRoute>
+      },
+      {
+        path: '/editTask',
+        element: <PrivateRoute><EditTask></EditTask></PrivateRoute>
       }
     ],
     errorElement: <ErrorPage></ErrorPage>
