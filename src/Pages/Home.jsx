@@ -1,29 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
-import { useLocation } from "react-router-dom";
 
 
 const Home = () => {
     // const [tasks, setTasks] = useState([]);
-    const { user, tasks, setUser } = useContext(AuthContext);
+    const { user, tasks, loading, doing, done, todo } = useContext(AuthContext);
     // console.log(tasks);
-    const [done, setDone] = useState([])
-    const [doing, setDoing] = useState([]);
-    const [todo, setTodo] = useState([]);
-
-    useEffect(() => {
-        if (user) {
-            const tempDoing = tasks.filter(task => user.doing.includes(task._id));
-            setDoing(tempDoing)
-            const tempDone = tasks.filter(task => user.done.includes(task._id));
-            setDone(tempDone)
-            const tempTodo = tasks.filter(task => !user.done.includes(task._id) && !user.doing.includes(task._id));
-            setTodo(tempTodo)
-        }
-
-    }, [tasks, user])
-
 
 
     const showDetails = task => {
@@ -79,20 +62,32 @@ const Home = () => {
             user.done = newDone;
             const updatedUser = user;
             fetch(`http://localhost:5000/user/${user?._id}`, {
-                method: "PUT", 
+                method: "PUT",
                 headers: {
-                    "content-type" : 'application/json'
+                    "content-type": 'application/json'
                 },
                 body: JSON.stringify(updatedUser)
             })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if(data.modifiedCount){
-                    window.location.reload();
-                }
-            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data);
+                    if (data.modifiedCount) {
+                        window.location.reload()
+                    }
+                })
         })
+    }
+
+    if (loading) {
+        return <div className="flex justify-center py-8">
+            <span className="loading loading-spinner text-primary"></span>
+            <span className="loading loading-spinner text-secondary"></span>
+            <span className="loading loading-spinner text-accent"></span>
+            <span className="loading loading-spinner text-neutral"></span>
+            <span className="loading loading-spinner text-info"></span>
+            <span className="loading loading-spinner text-success"></span>
+            
+        </div>
     }
 
     return (
@@ -109,7 +104,7 @@ const Home = () => {
                                             <div key={task._id} className="card bg-black bg-opacity-30 shadow-xl m-6">
                                                 <div className="card-body">
                                                     <h2 className="card-title">{task.title}</h2>
-                                                    <p>{task.description}</p>
+                                                    <p>{task.description.length > 40 ? task.description.slice(0, 39) + "..." : task.description}</p>
                                                     <div className="card-actions justify-end">
                                                         <button className="btn btn-primary" onClick={() => showDetails(task)}>View Details</button>
                                                     </div>
@@ -145,7 +140,7 @@ const Home = () => {
                                             <div key={task._id} className="card bg-black bg-opacity-30 shadow-xl m-6">
                                                 <div className="card-body">
                                                     <h2 className="card-title">{task.title}</h2>
-                                                    <p>{task.description}</p>
+                                                    <p>{task.description.length > 40 ? task.description.slice(0, 39) + "..." : task.description}</p>
                                                     <div className="card-actions justify-end">
                                                         <button className="btn btn-primary" onClick={() => showDetails(task)}>View Details</button>
                                                     </div>
@@ -162,7 +157,7 @@ const Home = () => {
                             <div key={task._id} className="card bg-black bg-opacity-30 shadow-xl m-6">
                                 <div className="card-body">
                                     <h2 className="card-title">{task.title}</h2>
-                                    <p>{task.description}</p>
+                                    <p>{task.description.length > 40 ? task.description.slice(0, 39) + "..." : task.description}</p>
                                     <div className="card-actions justify-end">
                                         <button className="btn btn-primary" onClick={() => showDetails(task)}>View Details</button>
                                     </div>
@@ -172,7 +167,7 @@ const Home = () => {
                     </div>
             }
         </div>
-    );
+    )
 };
 
 export default Home;

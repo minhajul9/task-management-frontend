@@ -7,15 +7,15 @@ import { useNavigate } from 'react-router-dom';
 
 const MyTasks = () => {
 
-    const { user } = useContext(AuthContext)
+    const { user, updateTasks, tasks } = useContext(AuthContext)
 
-    const [tasks, setTasks] = useState([]);
+    const [myTasks, setMyTasks] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:5000/tasks/${user?.uid}`)
             .then(res => res.json())
-            .then(data => setTasks(data))
+            .then(data => setMyTasks(data))
     }, [user]);
 
     const handleDelete = id => {
@@ -36,8 +36,11 @@ const MyTasks = () => {
                     .then(res => res.json())
                     .then(data => {
                         if (data.deletedCount > 0) {
-                            const remaining = tasks.filter(task => task._id !== id);
-                            setTasks(remaining)
+                            const remainingMyTasks = myTasks.filter(task => task._id !== id);
+                            const remainingTasks = tasks.filter(task => task._id !== id);
+                            console.log("remain tasks", remainingTasks);
+                            setMyTasks(remainingMyTasks)
+                            updateTasks(remainingTasks)
                             Swal.fire(
                                 'Deleted!',
                                 'Task has been deleted.',
@@ -64,7 +67,7 @@ const MyTasks = () => {
                     <tbody>
 
                         {
-                            tasks.map(task =>
+                            myTasks.map(task =>
                                 <tr key={task._id}>
                                     <td>{task.title}</td>
                                     <td>{task.description}</td>

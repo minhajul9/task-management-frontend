@@ -2,10 +2,12 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const AddATask = () => {
 
-    const {user} = useContext(AuthContext)
+    const { user, tasks, updateTasks } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const {
         register,
@@ -15,28 +17,32 @@ const AddATask = () => {
 
     const onSubmit = data => {
 
-        const {title, description, level} = data;
+        const { title, description, level } = data;
 
-        const task = {title, description, level, creator: user?.email, creatorId: user?.uid, creatorName: user?.name}
+        const task = { title, description, level, creator: user?.email, creatorId: user?.uid, creatorName: user?.name }
         // console.log(task)
 
         fetch('http://localhost:5000/tasks', {
             method: "POST",
             headers: {
-                'content-type' : 'application/json'
+                'content-type': 'application/json'
             },
             body: JSON.stringify(task)
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.insertedId){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Task added successfully.',
-                  })
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    task._id = data.insertedId
+                    tasks.push(task)
+                    updateTasks(tasks)
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Task added successfully.',
+                    })
+                    navigate('/')
+                }
+            })
     }
 
     return (
@@ -52,12 +58,12 @@ const AddATask = () => {
                             <input type="text" {...register('title', { required: true })} placeholder="Title" className="input input-bordered p-2" />
                             {errors.title && <span className="text-red-600">Please, Add a title.</span>}
                         </div>
-                        
+
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Difficulty Level</span>
                             </label>
-                            <select defaultValue='Easy' {...register('level', {required:true})} className="select select-ghost w-full max-w-xs input-bordered ">
+                            <select defaultValue='Easy' {...register('level', { required: true })} className="select select-ghost w-full max-w-xs input-bordered ">
                                 <option value='Easy'>Easy</option>
                                 <option value='Medium'>Medium</option>
                                 <option value='Hard'>Hard</option>
@@ -71,7 +77,7 @@ const AddATask = () => {
                             <label className="label">
                                 <span className="label-text">Description</span>
                             </label>
-                            <textarea className="input input-bordered h-32 p-2" {...register('description', {required: true})} placeholder='Description'  cols="50" rows="30"></textarea>
+                            <textarea className="input input-bordered h-32 p-2" {...register('description', { required: true })} placeholder='Description' cols="50" rows="30"></textarea>
                             {errors.description && <span className="text-red-600">Please, Write description.</span>}
 
                         </div>

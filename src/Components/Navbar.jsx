@@ -46,7 +46,7 @@ const Navbar = () => {
                             setUser(data)
                         }
                     })
-                console.log(user);
+                // console.log(user);
             })
             .catch(error => {
                 console.log(error);
@@ -116,7 +116,7 @@ const Navbar = () => {
                         {navItem}
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost normal-case text-xl">Task</Link>
+                <Link to='/' className="btn btn-ghost normal-case text-xl w-10 md:w-52 ms-8 my-2 text-left">Task Management</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

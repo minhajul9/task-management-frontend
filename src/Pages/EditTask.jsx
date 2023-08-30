@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const EditTask = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, tasks, updateTasks } = useContext(AuthContext);
     const location = useLocation();
     const task = location.state;
     // console.log(task);
@@ -44,6 +44,9 @@ const EditTask = () => {
                     .then(res => res.json())
                     .then(data => {
                         if (data.modifiedCount) {
+                            const index = tasks.findIndex(task => task._id === newTask._id)
+                            tasks[index] = newTask;
+                            updateTasks(tasks)
                             Swal.fire('Saved!', '', 'success')
                             navigate('/')
                         }
@@ -60,7 +63,7 @@ const EditTask = () => {
     return (
         <div className="w-11/12 md:w-1/2 mx-auto min-h-screen pt-20">
             <div className="flex-col mt-12">
-                <h1 className='text-3xl font-bold text-center my-8'>Add a task</h1>
+                <h1 className='text-3xl font-bold text-center my-8'>Edit Task</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="card flex-shrink-0 w-full md:p-8 shadow-2xl bg-base-100">
                     <div className="card-body">
                         <div className="form-control">
@@ -94,7 +97,7 @@ const EditTask = () => {
 
                         </div>
                         <div className="form-control mt-6">
-                            <input className="btn btn-primary" type="submit" value="Add Task" />
+                            <input className="btn btn-primary" type="submit" value="Update Task" />
                         </div>
                     </div>
                 </form>

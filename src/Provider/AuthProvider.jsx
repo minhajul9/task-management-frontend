@@ -9,13 +9,25 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
+// eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [tasks, setTasks] = useState([]);
 
+    const updateTasks = newTasks => {
+        setTasks(newTasks)
+    }
+
+
+
     useEffect(() => {
+
+        fetch('http://localhost:5000/tasks')
+            .then(res => res.json())
+            .then(data => setTasks(data))
+
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             // console.log(currentUser);
             if (currentUser) {
@@ -40,11 +52,23 @@ const AuthProvider = ({ children }) => {
         }
     }, [])
 
+    const [done, setDone] = useState([])
+    const [doing, setDoing] = useState([]);
+    const [todo, setTodo] = useState([]);
+
     useEffect(() => {
-        fetch('http://localhost:5000/tasks')
-            .then(res => res.json())
-            .then(data => setTasks(data))
-    }, [])
+        // console.log('user updated');
+        if (user) {
+            const tempDoing = tasks.filter(task => user.doing.includes(task._id));
+            setDoing(tempDoing)
+            const tempDone = tasks.filter(task => user.done.includes(task._id));
+            setDone(tempDone)
+            const tempTodo = tasks.filter(task => !user.done.includes(task._id) && !user.doing.includes(task._id));
+            setTodo(tempTodo)
+        }
+
+    }, [tasks, user])
+
 
     const googleSignIn = () => {
         return signInWithPopup(auth, googleProvider)
@@ -63,10 +87,15 @@ const AuthProvider = ({ children }) => {
         setUser,
         loading,
         tasks,
+        setTasks,
         setLoading,
         googleSignIn,
         githubSignIn,
-        logOut
+        logOut,
+        updateTasks,
+        doing, 
+        done,
+        todo
     }
 
     return (
