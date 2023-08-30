@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
 
-        fetch('http://localhost:5000/tasks')
+        fetch('https://task-management-backend-roan.vercel.app/tasks')
             .then(res => res.json())
             .then(data => setTasks(data))
 
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
             // console.log(currentUser);
             if (currentUser) {
                 // console.log(currentUser);
-                fetch(`http://localhost:5000/users/${currentUser.uid}`)
+                fetch(`https://task-management-backend-roan.vercel.app/users/${currentUser.uid}`)
                     .then(res => res.json())
                     .then(data => {
                         // console.log('data',data);

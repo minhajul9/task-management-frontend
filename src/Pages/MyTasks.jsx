@@ -13,7 +13,7 @@ const MyTasks = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/tasks/${user?.uid}`)
+        fetch(`https://task-management-backend-roan.vercel.app/tasks/${user?.uid}`)
             .then(res => res.json())
             .then(data => setMyTasks(data))
     }, [user]);
@@ -30,7 +30,7 @@ const MyTasks = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/task/${id}`, {
+                fetch(`https://task-management-backend-roan.vercel.app/task/${id}`, {
                     method: "delete"
                 })
                     .then(res => res.json())

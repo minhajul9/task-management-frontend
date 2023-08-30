@@ -30,7 +30,7 @@ const Navbar = () => {
                     doing: []
                 }
 
-                fetch('http://localhost:5000/users', {
+                fetch('https://task-management-backend-roan.vercel.app/users', {
                     method: "POST",
                     headers: {
                         'content-type': 'application/json'
@@ -71,7 +71,7 @@ const Navbar = () => {
                     doing: []
                 }
 
-                fetch('http://localhost:5000/users', {
+                fetch('https://task-management-backend-roan.vercel.app/users', {
                     method: "POST",
                     headers: {
                         'content-type': 'application/json'

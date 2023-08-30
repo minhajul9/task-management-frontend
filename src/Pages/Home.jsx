@@ -61,7 +61,7 @@ const Home = () => {
             user.doing = newDoing;
             user.done = newDone;
             const updatedUser = user;
-            fetch(`http://localhost:5000/user/${user?._id}`, {
+            fetch(`https://task-management-backend-roan.vercel.app/user/${user?._id}`, {
                 method: "PUT",
                 headers: {
                     "content-type": 'application/json'

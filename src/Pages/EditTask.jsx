@@ -34,7 +34,7 @@ const EditTask = () => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/task/${task._id}`, {
+                fetch(`https://task-management-backend-roan.vercel.app/task/${task._id}`, {
                     method: "PUT",
                     headers: {
                         'content-type': 'application/json'

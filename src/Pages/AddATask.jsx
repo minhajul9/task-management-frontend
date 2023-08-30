@@ -22,7 +22,7 @@ const AddATask = () => {
         const task = { title, description, level, creator: user?.email, creatorId: user?.uid, creatorName: user?.name }
         // console.log(task)
 
-        fetch('http://localhost:5000/tasks', {
+        fetch('https://task-management-backend-roan.vercel.app/tasks', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
