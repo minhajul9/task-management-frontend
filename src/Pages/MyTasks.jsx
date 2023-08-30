@@ -30,7 +30,7 @@ const MyTasks = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`https://mohite-task-minhajul9.vercel.app/tasks/${id}`, {
+                fetch(`http://localhost:5000/task/${id}`, {
                     method: "delete"
                 })
                     .then(res => res.json())

@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
+import { useLocation } from "react-router-dom";
 
 
 const Home = () => {
     // const [tasks, setTasks] = useState([]);
-    const { user, tasks } = useContext(AuthContext);
+    const { user, tasks, setUser } = useContext(AuthContext);
     // console.log(tasks);
     const [done, setDone] = useState([])
     const [doing, setDoing] = useState([]);
-    const [todo, setTodo] = useState([])
-    console.log(user);
+    const [todo, setTodo] = useState([]);
 
     useEffect(() => {
         if (user) {
@@ -27,6 +27,8 @@ const Home = () => {
 
 
     const showDetails = task => {
+        const newDone = user.done;
+        const newDoing = user.doing;
         Swal.fire({
             html:
                 `<b>${task.title}</b></br></br> ` +
@@ -39,10 +41,57 @@ const Home = () => {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire('Status changed to DOING', '', 'info')
-            } else if (result.isDenied) {
-                Swal.fire('Status changed to DONE', '', 'success')
+                if (newDoing.includes(task._id)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Already doing!',
+                    })
+                }
+                else {
+                    newDoing.push(task._id)
+                    if (newDone.includes(task._id)) {
+                        const index = newDone.indexOf(task._id);
+                        newDone.splice(index, 1)
+                    }
+                    Swal.fire('Status changed to DOING', '', 'info')
+                }
             }
+            else if (result.isDenied) {
+                if (newDone.includes(task._id)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Already Done!',
+                    })
+                }
+                else {
+                    newDone.push(task._id)
+                    if (newDoing.includes(task._id)) {
+                        const index = newDoing.indexOf(task._id);
+                        newDoing.splice(index, 1)
+                    }
+                    Swal.fire('Status changed to DONE', '', 'success')
+                }
+
+            }
+            user.doing = newDoing;
+            user.done = newDone;
+            const updatedUser = user;
+            fetch(`http://localhost:5000/user/${user?._id}`, {
+                method: "PUT", 
+                headers: {
+                    "content-type" : 'application/json'
+                },
+                body: JSON.stringify(updatedUser)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if(data.modifiedCount){
+                    window.location.reload();
+                }
+            })
         })
     }
 
@@ -90,7 +139,7 @@ const Home = () => {
                         {done.length > 0 &&
                             <div className="border rounded-lg m-8 bg-black bg-opacity-25 shadow-lg">
                                 <h1 className="text-center mt-8 font-bold text-2xl">DONE</h1>
-                                <div className="relative top-28 grid sm:grid-cols-2 lg:grid-cols-4 md:ms-2">
+                                <div className="top-28 grid sm:grid-cols-2 lg:grid-cols-4 md:ms-2">
                                     {
                                         done.map(task =>
                                             <div key={task._id} className="card bg-black bg-opacity-30 shadow-xl m-6">
@@ -108,7 +157,7 @@ const Home = () => {
                         }
                     </div>
                     :
-                    <div className="relative top-28 grid sm:grid-cols-2 lg:grid-cols-4 md:ms-2">
+                    <div className="top-28 grid sm:grid-cols-2 lg:grid-cols-4 md:ms-2">
                         {tasks.map(task =>
                             <div key={task._id} className="card bg-black bg-opacity-30 shadow-xl m-6">
                                 <div className="card-body">
