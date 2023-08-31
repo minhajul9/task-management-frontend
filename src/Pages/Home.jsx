@@ -16,6 +16,7 @@ const Home = () => {
             html:
                 `<b>${task.title}</b></br></br> ` +
                 `<p>${task.description}</p> </br>` +
+                `<p>Difficulty Level: ${task.level}</p> </br>` +
                 `Added by: <strong>${task.creatorName}</strong>`,
             showDenyButton: true,
             showCancelButton: true,

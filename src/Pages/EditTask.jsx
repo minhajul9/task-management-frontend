@@ -44,9 +44,11 @@ const EditTask = () => {
                     .then(res => res.json())
                     .then(data => {
                         if (data.modifiedCount) {
+                            newTask._id = task._id
                             const index = tasks.findIndex(task => task._id === newTask._id)
                             tasks[index] = newTask;
-                            updateTasks(tasks)
+                            const newTasks = [...tasks]
+                            updateTasks(newTasks)
                             Swal.fire('Saved!', '', 'success')
                             navigate('/')
                         }

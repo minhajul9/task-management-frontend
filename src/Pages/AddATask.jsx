@@ -33,8 +33,8 @@ const AddATask = () => {
             .then(data => {
                 if (data.insertedId) {
                     task._id = data.insertedId
-                    tasks.push(task)
-                    updateTasks(tasks)
+                    const newTasks = [...tasks, task]
+                    updateTasks(newTasks)
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
