@@ -1,8 +1,18 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+Task Management system is Fullstack Project. It is built using MERN Stack Development. It has backend server. All data are stored in MongoDB. Here are some features of this app,
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Anyone can signup in this sytem using Google or Github profile.
+- After signup users can add tasks.
+- Users can see the tasks added by him in the My Task page.
+- From My Task page user can edit or detele tasks added by him.
+- In the Homepage user can see all the tasks.
+- In Home page all the tasks divided into fields doing, done and todo.
+- User can change the status of the tasks only for him.
+
+
+##  Links
+# 🔗 [Live](https://golden-narwhal-ab1b27.netlify.app/)
+## [Server](https://task-management-backend-roan.vercel.app/)
+## [Server Code](https://github.com/minhajul9/task-management-backend)
